@@ -87,20 +87,28 @@ public class Branch implements BranchLocal {
 
 	@Override
 	public Street getStreet(int start, int dest) {
-		Response res=HttpConnector.getStreets(start, dest);
-		Street s=res.readEntity(Street.class);
-		return s;
-		
-		
+		Response res= HttpConnector.getStreets(start, dest);
+		if(res.getStatus()==200) {
+			String s=res.readEntity(String.class);
+			Document d=Document.parse(s);
+			return Street.decodeStreet(d);
+		}else return null;
 	}
+		
+		
+	
 
 	@Override
 	public Street getStreetById(String sid) {
-		Response res=HttpConnector.getStreetById(sid);
-		Street s=res.readEntity(Street.class);
-		return s;
-		
+		Response res= HttpConnector.getStreetById(sid);
+		if(res.getStatus()==200) {
+			String s=res.readEntity(String.class);
+			Document d=Document.parse(s);
+			return Street.decodeStreet(d);
+		}else return null;
 	}
+		
+	
 
 	@Override
 	public Node getNodeById(int id) {
