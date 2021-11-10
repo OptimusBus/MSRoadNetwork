@@ -57,7 +57,7 @@ public class Node {
 	public static Node decodeIntersection(Document d) {
 		if(d.size()==0) return null;
 		Location l=Location.decodeLocation((Document) d.get("coordinate"));
-		String nid=d.getString("osmid");
+		String nid=d.getInteger("osmid").toString();
 		double pd=-1;
 		return new Node(nid,l, Node.Type.TRANSITION, pd);
 	}

@@ -1,5 +1,10 @@
 package innerconnector;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.client.WebClient;
@@ -10,13 +15,19 @@ public class HttpConnector {
 	
 	
 	
-	private static Response makeRequest(String url, Method m, String params) {
+	private static Response makeRequest(String url, Method m, Map<String,String> queryParam, String params) {
+		
 		WebClient client = WebClient.create(baseAddress);
 		client.accept("application/json");
 		client.type("application/json");
 		client.path(url);
 		switch(m) {
 			case GET:
+				if(queryParam != null) {
+					for (Entry<String, String> entry : queryParam.entrySet()) {
+				        client.query(entry.getKey(), entry.getValue());
+				    }
+				}
 				return client.get();
 			case POST:
 				if(params != null) return client.post(params);
@@ -29,28 +40,36 @@ public class HttpConnector {
 		}
 	}
 	
-	
-	
 	public static Response getIntersection(int id) {
-		return makeRequest("intersections/"+id, Method.GET, null);
+		return makeRequest("intersections/"+id, Method.GET, null, null);
 	}
 	
-	public static Response getNearestIntersection(double lat, double lon) {
-		return makeRequest("intersections/nearest?latitude="+lat+"&longitude="+lon, Method.GET, null);
+	public static Response getNearestIntersection(Double lat, Double lon) {
+		Map<String, String> param = new HashMap<>();
+		param.put("latitude", lat.toString());
+		param.put("longitude", lon.toString());
+		return makeRequest("intersections/nearest", Method.GET, param, null);
 	}
 	
 	
-	public static Response getShortestPaths(int source, int dest) {
-		return makeRequest("shortestPaths?source="+source+"&destination="+dest+"&type=Intersection", Method.GET, null);
+	public static Response getShortestPaths(Integer source, Integer dest) {
+		Map<String, String> param = new HashMap<>();
+		param.put("source", source.toString());
+		param.put("destination", dest.toString());
+		param.put("type","Intersection");
+		return makeRequest("shortestPaths", Method.GET, param, null);
 	}
 	
 	
-	public static Response getStreets(int start,int dest) {
-		return makeRequest("streets?osmidStart="+start+"&osmidDest="+dest, Method.GET, null);
+	public static Response getStreets(Integer start,Integer dest) {
+		Map<String, String> param = new HashMap<>();
+		param.put("osmidStart", start.toString());
+		param.put("osmidDest", dest.toString());
+		return makeRequest("streets", Method.GET, param, null);
 	}
 	
 	public static Response getStreetById(String sid) {
-		return makeRequest("street/"+sid, Method.GET, null);
+		return makeRequest("streets/"+sid, Method.GET, null, null);
 	}
 	
 	private static final String baseAddress="http://assd-traffic-service-gruppo2.router.default.svc.cluster.local/assdTrafficService/rest/";

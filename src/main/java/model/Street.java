@@ -12,6 +12,8 @@ public class Street {
 		this.name = name;
 		this.weight = weight;
 		this.lenght = lenght;
+		this.from = from;
+		this.to = to;
 		this.ffs = ffs;
 	}
 	public String getId() {
@@ -66,7 +68,7 @@ public class Street {
 	public static Street decodeStreet(Document d) {
 		if(d.size() == 0) return null;
 		
-		String linkid= d.getString("linkid");
+		String linkid= d.getLong("linkId").toString();
 		int from = d.getInteger("from");
 		int to = d.getInteger("to");
 		int speedlimit=d.getInteger("speedlimit");
@@ -80,7 +82,7 @@ public class Street {
 	
 	public static Document encodeStreet(Street n) {
 		Document d= new Document();
-		d.append("linkid", n.getLinkid());
+		d.append("linkId", n.getLinkid());
 		d.append("from", n.getFrom());
 		d.append("to", n.getTo());
 		d.append("speedlimit", n.getSpeedlimit());

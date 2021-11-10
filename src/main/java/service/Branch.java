@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import org.bson.BsonArray;
+import org.bson.BsonValue;
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import db.MongoConnector;
@@ -21,7 +24,7 @@ public class Branch implements BranchLocal {
 
 	public Branch() {}
 	
-	private MongoConnector mdb = new MongoConnector();
+	//private MongoConnector mdb = new MongoConnector();
 
 	@Override
 	// Usiamo il  nostro db come cache
@@ -63,13 +66,15 @@ public class Branch implements BranchLocal {
 	@Override
 	public List<Node> getShortestPaths(int source, int dest) throws ClassCastException{
 		Response res=HttpConnector.getShortestPaths(source, dest);
+		System.out.print("Road network shortestPath" + res.getStatus());
 		if(res.getStatus()!= 200) return null;
 		String s=res.readEntity(String.class);
-		ArrayList<BasicDBObject> l = (ArrayList<BasicDBObject>) JSON.parse(s);
-		Iterator<BasicDBObject> i = l.iterator();
+		System.out.println(JSON.parse(s).toString());
+		BsonArray a =  BsonArray.parse(s);
+		Iterator<BsonValue> i = a.iterator();
 		List<Node> path=new ArrayList<Node>();
 		while(i.hasNext()) {
-			Document d = new Document(i.next());
+			Document d = Document.parse(i.next().toString());
 			Node n=getNodeById(d.getInteger("osmid"));
 			if(n!=null) {
 				path.add(n);
@@ -78,7 +83,6 @@ public class Branch implements BranchLocal {
 			}
 			
 		}
-		
 		if(path.size()<1) {
 			return null;
 		}
@@ -88,6 +92,7 @@ public class Branch implements BranchLocal {
 	@Override
 	public Street getStreet(int start, int dest) {
 		Response res= HttpConnector.getStreets(start, dest);
+		System.out.print("Road network street" + res.getStatus());
 		if(res.getStatus()==200) {
 			String s=res.readEntity(String.class);
 			Document d=Document.parse(s);
@@ -112,12 +117,13 @@ public class Branch implements BranchLocal {
 
 	@Override
 	public Node getNodeById(int id) {
-		return Node.decodeNode(mdb.getNodeById(id));
-		
+		//return Node.decodeNode(mdb.getNodeById(id));
+		return null;
 	}
 	
 	@Override
 	public Node getNodeByLatLon(double lat, double lon) {
-		return Node.decodeNode(mdb.getNodeByLocation(lat,lon));
+		//return Node.decodeNode(mdb.getNodeByLocation(lat,lon));
+		return null;
 	}
 }
