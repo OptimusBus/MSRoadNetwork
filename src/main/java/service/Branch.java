@@ -88,6 +88,28 @@ public class Branch implements BranchLocal {
 		}
 		return path;
 	}
+	
+	@Override
+	public List<Street> getShortestStreet(int source, int dest) throws ClassCastException{
+		Response res=HttpConnector.getShortestStreet(source, dest);
+		System.out.print("Road network shortestStreet" + res.getStatus());
+		if(res.getStatus()!= 200) return null;
+		String s=res.readEntity(String.class);
+		System.out.println(JSON.parse(s).toString());
+		BsonArray a =  BsonArray.parse(s);
+		Iterator<BsonValue> i = a.iterator();
+		List<Street> streets=new ArrayList<Street>();
+		while(i.hasNext()) {
+			Document d = Document.parse(i.next().toString());
+			streets.add(Street.decodeStreet(d));
+			
+			
+		}
+		if(streets.size()<1) {
+			return null;
+		}
+		return streets;
+	}
 
 	@Override
 	public Street getStreet(int start, int dest) {

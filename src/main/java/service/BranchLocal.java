@@ -14,5 +14,6 @@ public interface BranchLocal {
 	public Street getStreetById(String sid);
 	public Node getNodeById(int id);
 	public Node getNodeByLatLon(double lat, double lon);
+	public List<Street> getShortestStreet(int source,int dest);
 	
 }

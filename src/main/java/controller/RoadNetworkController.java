@@ -65,6 +65,14 @@ public class RoadNetworkController {
 	}
 	
 	@GET
+	@Path("/shortestStreet")
+	public Response getShortestPathType(@QueryParam("source")int source, @QueryParam("dest")int dest) {
+		List<Street> n=branch.getShortestStreet(source, dest);
+		if(n==null) return Response.status(404).entity("No Streets Found").build();
+		return Response.ok(n).build();
+	}
+	
+	@GET
 	@Path("/street")
 	public Response getStreet(@QueryParam("start")int start,@QueryParam("dest")int dest) {
 		Street s=branch.getStreet(start, dest);

@@ -60,7 +60,15 @@ public class HttpConnector {
 		return makeRequest("shortestPaths", Method.GET, param, null);
 	}
 	
+	public static Response getShortestStreet(Integer source, Integer dest) {
+		Map<String, String> param = new HashMap<>();
+		param.put("source", source.toString());
+		param.put("destination", dest.toString());
+		param.put("type","Street");
+		return makeRequest("shortestPaths", Method.GET, param, null);
+	}
 	
+
 	public static Response getStreets(Integer start,Integer dest) {
 		Map<String, String> param = new HashMap<>();
 		param.put("osmidStart", start.toString());
