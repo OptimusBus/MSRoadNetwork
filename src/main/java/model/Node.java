@@ -70,6 +70,14 @@ public class Node {
 		d.append("type", n.getType().toString());
 		return d;
 	}
+	
+	public static Node decodeIntersection(Document d, Node.Type type) {
+		if(d.size()==0) return null;
+		Location l = Location.decodeLocation((Document) d.get("coordinate"));
+		String nid = d.getInteger("osmid").toString();
+		double pd = -1;
+		return new Node(nid,l, type, pd);
+	}
 
 	private Location location;
 	private String nodeId;

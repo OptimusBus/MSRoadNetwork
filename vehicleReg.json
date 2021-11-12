@@ -1,0 +1,51 @@
+[
+	{
+	"username": "augusto",
+	"password": "12345678",
+	"email": "augusto@gmail.com",
+	"vehicleId": "VE0001"
+	},
+	{
+	"username": "matteo",
+	"password": "12345666",
+	"email": "matteo@gmail.com",
+	"vehicleId": "VE0002"
+	},
+	{
+	"username": "pasquale",
+	"password":	"12345679",
+	"email": "pasquale@gmail.com",
+	"vehicleId": "VE0003"
+	},
+	{
+	"username": "giacomo",
+	"password": "02345678",
+	"email": "giacomo@gmail.com",
+	"vehicleId": "VE0004"
+	},
+	{
+	"username": "rocco",
+	"password": "12345670",
+	"email": "rocco@gmail.com",
+	"vehicleId": "VE0005"
+	},
+	{
+	"username": "berlusconi",
+	"password": "12345648",
+	"email": "berlusconi@gmail.com",
+	"vehicleId": "VE0006"
+	},
+	{
+	"username": "spiderman",
+	"password": "12342678",
+	"email": "spiderman@gmail.com",
+	"vehicleId": "VE0007"
+	},
+	{
+	"username": "francesco",
+	"password": "92345678",
+	"email": "francesco@gmail.com",
+	"vehicleId": "VE0008"
+	}
+	
+	]
