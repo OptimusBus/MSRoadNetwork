@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-@ApplicationPath("/RoadNetworkApplication-1.0")
+@ApplicationPath("/RoadNetwork-1.0")
 public class RoadNetworkApplication extends Application{
 	
 	public Set<Class<?>> getClasses() {
