@@ -1,5 +1,8 @@
 package db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
@@ -7,6 +10,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+
+import model.Node;
+import model.Node.Type;
 
 public class MongoConnector {
 	
@@ -32,7 +38,20 @@ public class MongoConnector {
 		return coll.find(criteria).first();
 	}
 	
-	private static final MongoClient m= new MongoClient("132.121.170.248",31183);
+	public List<Document> getPickupPoint() {
+		MongoDatabase db = m.getDatabase("NodesDB");
+		MongoCollection<Document> coll = db.getCollection("nodes");
+		return coll.find(Filters.eq("type","PICKUPPOINT")).into(new ArrayList<Document>());
+	}
+	
+	public List<Document> getStandingPoint() {
+		MongoDatabase db = m.getDatabase("NodesDB");
+		MongoCollection<Document> coll = db.getCollection("nodes");
+		return coll.find(Filters.eq("type","STANDINGPOINT")).into(new ArrayList<Document>());
+	}
+	
+	
+	private static final MongoClient m= new MongoClient("137.121.170.248",31186);
 
 	
 

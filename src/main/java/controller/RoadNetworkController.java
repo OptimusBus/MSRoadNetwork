@@ -88,6 +88,22 @@ public class RoadNetworkController {
 		return Response.ok(s).build();
 	}
 	
+	@GET
+	@Path ("/pickuppoint")
+	public Response getPickupPoint() {
+		List<Node> n = branch.getNodePickupPoint();
+		if(n==null) return Response.status(404).entity("No pickuppoint found").build();
+		return Response.ok(n).build();
+	}
+	
+	@GET
+	@Path ("/standingpoint")
+	public Response getStandingPoint() {
+		List<Node> n = branch.getNodeStandingPoint();
+		if(n==null) return Response.status(404).entity("No standingpoint found").build();
+		return Response.ok(n).build();
+	}
+	
 	
 	private BranchLocal branch=new Branch();
 

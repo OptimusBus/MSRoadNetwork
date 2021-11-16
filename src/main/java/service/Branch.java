@@ -17,6 +17,7 @@ import com.mongodb.util.JSON;
 import db.MongoConnector;
 import model.Location;
 import model.Node;
+import model.Node.Type;
 import model.Street;
 import innerconnector.HttpConnector;
 
@@ -24,7 +25,7 @@ public class Branch implements BranchLocal {
 
 	public Branch() {}
 	
-	//private MongoConnector mdb = new MongoConnector();
+	private MongoConnector mdb = new MongoConnector();
 
 	@Override
 	// Usiamo il  nostro db come cache
@@ -139,13 +140,46 @@ public class Branch implements BranchLocal {
 
 	@Override
 	public Node getNodeById(int id) {
-		//return Node.decodeNode(mdb.getNodeById(id));
-		return null;
+		return Node.decodeNode(mdb.getNodeById(id));
+		
 	}
 	
 	@Override
 	public Node getNodeByLatLon(double lat, double lon) {
-		//return Node.decodeNode(mdb.getNodeByLocation(lat,lon));
+		return Node.decodeNode(mdb.getNodeByLocation(lat,lon));
+		
+	}
+
+	@Override
+	public List<Node> getNodePickupPoint() {
+		List<Document> pck = mdb.getPickupPoint();
+		List<Node> l = new ArrayList<Node>();
+		for (Document d : pck) {
+			l.add(Node.decodeNode(d));
+			
+		}
+		
+		return l;
+		
+	}
+	
+	
+
+	@Override
+	public List<Node> getNodeStandingPoint() {
+		List<Document> psk = mdb.getStandingPoint();
+		List<Node> ls = new ArrayList<Node>();
+		for (Document d : psk) {
+			ls.add(Node.decodeNode(d));
+			
+		}
+		
+		return ls;
+	}
+
+	@Override
+	public List<Node> getNearestPickupPoint(double lat, double lon) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

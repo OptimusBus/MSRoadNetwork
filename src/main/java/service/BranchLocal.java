@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import model.Node;
+import model.Node.Type;
 import model.Street;
 
 public interface BranchLocal {
@@ -15,5 +16,8 @@ public interface BranchLocal {
 	public Node getNodeById(int id);
 	public Node getNodeByLatLon(double lat, double lon);
 	public List<Street> getShortestStreet(int source,int dest);
+	public List<Node> getNodePickupPoint ();
+	public List<Node> getNodeStandingPoint ();
+	public List<Node> getNearestPickupPoint (double lat, double lon);
 	
 }
