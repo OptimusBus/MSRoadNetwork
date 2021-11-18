@@ -22,10 +22,12 @@ public class MongoConnector {
 	
 	public MongoConnector() {}
 	
-	public Document getNodeById(int id) {
+	public Document getNodeById(String id) {
 		MongoDatabase db=m.getDatabase("NodesDB");
 		MongoCollection<Document> coll=db.getCollection("nodes");
-		return coll.find(Filters.eq("nodeId", id)).first();
+		Document d = coll.find(Filters.eq("nodeId", id)).first();
+		
+		return d;
 	}
 	
 	// da testare 

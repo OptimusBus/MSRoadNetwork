@@ -29,20 +29,21 @@ public class Branch implements BranchLocal {
 
 	@Override
 	// Usiamo il  nostro db come cache
-	public Node getIntersectionById(int id) {
+	public Node getIntersectionById(Integer id) {
 		
-		Node n=getNodeById(id);
+	
+		Document d=mdb.getNodeById(id.toString());
 		
-		if(n!=null) {
-			return n;
+		if(d!=null) {
+			return Node.decodeNode(d);
 		}
 		
 		
 		Response res= HttpConnector.getIntersection(id);
 		if(res.getStatus()==200) {
 			String s=res.readEntity(String.class);
-			Document d=Document.parse(s);
-			return Node.decodeIntersection(d);
+			Document d1=Document.parse(s);
+			return Node.decodeIntersection(d1);
 		}else return null;
 	}
 
@@ -76,7 +77,7 @@ public class Branch implements BranchLocal {
 		List<Node> path=new ArrayList<Node>();
 		while(i.hasNext()) {
 			Document d = Document.parse(i.next().toString());
-			Node n=getNodeById(d.getInteger("osmid"));
+			Node n=getNodeById(d.getInteger("osmid").toString());
 			if(n!=null) {
 				path.add(n);
 			}else {
@@ -139,7 +140,7 @@ public class Branch implements BranchLocal {
 	
 
 	@Override
-	public Node getNodeById(int id) {
+	public Node getNodeById(String id) {
 		return Node.decodeNode(mdb.getNodeById(id));
 		
 	}
@@ -168,9 +169,12 @@ public class Branch implements BranchLocal {
 	@Override
 	public List<Node> getNodeStandingPoint() {
 		List<Document> psk = mdb.getStandingPoint();
+		System.out.println(psk.size());
 		List<Node> ls = new ArrayList<Node>();
 		for (Document d : psk) {
+			System.out.println(d.toJson());
 			ls.add(Node.decodeNode(d));
+			
 			
 		}
 		

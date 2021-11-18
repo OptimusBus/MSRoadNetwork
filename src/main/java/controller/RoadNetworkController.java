@@ -19,7 +19,7 @@ import service.BranchLocal;
 
 @Consumes({"application/json"})
 @Produces("application/json")
-@Path("/roadNetwork")
+@Path("/roadnetwork")
 
 public class RoadNetworkController {
 	

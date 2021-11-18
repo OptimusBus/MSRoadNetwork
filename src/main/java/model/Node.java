@@ -41,6 +41,7 @@ public class Node {
 		this.type = type;
 	}
 	public static Node decodeNode(Document d) {
+		if(d==null) return null;
 		if(d.size() == 0) return null;
 		
 		String id = d.getString("nodeId");
@@ -55,6 +56,7 @@ public class Node {
 	
 	
 	public static Node decodeIntersection(Document d) {
+		if(d==null) return null;
 		if(d.size()==0) return null;
 		Location l=Location.decodeLocation((Document) d.get("coordinate"));
 		String nid=d.getInteger("osmid").toString();
